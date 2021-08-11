@@ -1,0 +1,5 @@
+{
+    "applicationName" : "Inpobot v2",
+    "errorMessage": "There is an error",
+    "errorCommandGuildOnly": "This command only work on a server!"
+}

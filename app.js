@@ -2,8 +2,9 @@ const fs = require("fs");
 const Discord = require("discord.js");
 const client = new Discord.client();
 
-const localization = require("./localization.json"); 
-const language = "fr";
+const lang = "fr";
+const strings = require(`./${lang}/strings.json`);
+const config = require("./config.json");
 
 client.commands = new Discord.Collection();
 
@@ -23,32 +24,40 @@ for (const file of commandFiles) {
 
 client.on("ready", () => {
   console.log("Démarage du bot Inpobot v2");
-  console.log()
+  console.log();
   return;
 });
 
 client.on("error", (error) => {
-  console.error("Une erreur est survenue. \n", error);
+  console.error(strings.errorMessage + "\n", error);
   return;
 });
 
-
-client.on("message", (message)=>{
-  if(message.author.bot || !message.content.startWith(prefix.toLowerCase())){
+client.on("message", (message) => {
+  if (message.author.bot || !message.content.startWith(prefix.toLowerCase())) {
     return;
   }
 
   const args = message.content.slice(prefix.length).split(/ +/);
   const commandName = args.shift().toLowerCase;
   // console.log(blablabla)
-  if(!client.commands.has(commandName)){
+  if (!client.commands.has(commandName)) {
+    return;
+  }
+
+  const command = client.commands.get(commandName);
+
+  if (command.guildOnly && !message.guild) {
+    message.channel.send(strings.errorCommandGuildOnly);
     return;
   }
   
-  const command = client.commands.get(commandName);
+  try{
+    command.execute(message, args);
+    console.log(`${command.name} ${command.description}`);
+  } catch(e){
+    console.error(e);
+  }  
+});
 
-  if(command.guildOnly && !message.guild){
-    message.channel.send();
-  }
-  //TODO 
-})
+client.login(config.token);
