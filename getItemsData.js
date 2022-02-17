@@ -101,7 +101,7 @@ var getItemDataFromWiki = function () { return __awaiter(_this, void 0, void 0, 
                 finalArray = [];
                 currentArray = [];
                 console.log("nb items total: " + list.length);
-                for (i = 0; i < 5; i++) {
+                for (i = 0; i < list.length; i++) {
                     item = list.item(i);
                     tdList = item.getElementsByTagName("td");
                     currentArray = [];

@@ -88,7 +88,7 @@ const getItemDataFromWiki = async () => {
 
   let currentArray = [];
   console.log("nb items total: " + list.length);
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < list.length; i++) {
     const item = list.item(i);
     const tdList = item.getElementsByTagName("td");
 
