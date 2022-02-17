@@ -1,3 +1,6 @@
+items/
+dist/
+
 config.json
 
 # Logs
